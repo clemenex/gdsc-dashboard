@@ -3,12 +3,19 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:lottie/lottie.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-class DashHomePage extends StatelessWidget {
+class DashHomePage extends StatefulWidget {
   const DashHomePage({super.key});
 
   @override
+  State<DashHomePage> createState() => _DashHomePageState();
+}
+
+class _DashHomePageState extends State<DashHomePage> {
+  @override
   Widget build(BuildContext context) {
+    PageController _controller = PageController();
     final List<double> yValues = [3, 5, 8, 6]; // Y-axis values
     final List<String> xLabels = ['A', 'B', 'C', 'D']; // X-axis labels
     String graphTitle = '2024 National Budget of the Philippines';
@@ -166,10 +173,60 @@ class DashHomePage extends StatelessWidget {
                             );
                             showModalBottomSheet(
                                 context: context,
-                                builder: (context) =>
-                                    buildSheet(interpretation));
+                                builder: (context) => Container(
+                                      padding: EdgeInsets.all(16.0),
+                                      child: PageView.builder(
+                                        controller: _controller,
+                                        itemCount: 3,
+                                        itemBuilder:
+                                            (BuildContext context, int index) {
+                                          return Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              // Title for the interpretation
+                                              Text(
+                                                'Graph Interpretation',
+                                                style: TextStyle(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              SizedBox(height: 8),
+
+                                              // Displaying the interpretation
+                                              Text(
+                                                interpretation[index],
+                                                style: TextStyle(
+                                                  fontSize: 16,
+                                                ),
+                                              ),
+
+                                              SizedBox(height: 16),
+
+                                              Container(
+                                                  alignment: Alignment(0, 0.75),
+                                                  child: SmoothPageIndicator(
+                                                    controller: _controller,
+                                                    count: 3,
+                                                    effect: WormEffect(
+                                                      dotWidth: 10,
+                                                      dotHeight: 10,
+                                                      spacing: 8,
+                                                      radius: 10,
+                                                      dotColor: Colors.grey,
+                                                      activeDotColor:
+                                                          Colors.blue,
+                                                    ),
+                                                  )),
+                                            ],
+                                          );
+                                        },
+                                      ),
+                                    ));
                           },
-                          child: Text('interpret'),
+                          child: Text('Interpret'),
                         ),
                       ],
                     ),
@@ -227,56 +284,50 @@ class DashHomePage extends StatelessWidget {
       throw Exception('Failed to fetch budget data.');
     }
   }
-}
 
-Widget buildSheet(String interpretation) {
-  return Container(
-    padding: EdgeInsets.all(16.0),
-    child: Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // Title for the interpretation
-        Text(
-          'Graph Interpretation',
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        SizedBox(height: 8),
+  List<String> splitIntoParagraphs(String text) {
+    List<String> lines = text.split('\n');
+    List<String> paragraphs = [];
+    String currentParagraph = "";
 
-        // Displaying the interpretation
-        Text(
-          interpretation,
-          style: TextStyle(
-            fontSize: 16,
-          ),
-        ),
-      ],
-    ),
-  );
-}
-
-Future<String> interpretGraph(
-    String title, List<double> data, List<String> labels) async {
-  String result = '';
-
-  try {
-    await for (var value in Gemini.instance.promptStream(parts: [
-      Part.text('Interpret the following data visualization:\n'),
-      Part.text('Title: $title\n'),
-      Part.text('Data points: ${data.join(", ")}\n'),
-      Part.text('Labels: ${labels.join(", ")}\n'),
-    ])) {
-      if (value != null && value.output != null) {
-        result += value.output!;
+    for (String line in lines) {
+      if (line.trim().isNotEmpty) {
+        currentParagraph += line.trim() + " ";
+      } else if (currentParagraph.isNotEmpty) {
+        paragraphs.add(currentParagraph.trim());
+        currentParagraph = "";
       }
     }
-  } catch (e) {
-    print('Error during interpretation: $e');
-    result = 'Failed to interpret the graph.';
+    // Add the last paragraph if it exists
+    if (currentParagraph.isNotEmpty) {
+      paragraphs.add(currentParagraph.trim());
+    }
+    return paragraphs;
   }
 
-  return result;
+  Future<List<String>> interpretGraph(
+      String title, List<double> data, List<String> labels) async {
+    String result = '';
+
+    try {
+      await for (var value in Gemini.instance.promptStream(parts: [
+        Part.text(
+            'Given the following context, can you create me a data storytelling like interpretation of our graphs? I want you to give me 3 paragraphs with 3 sentences each that captures the heart of the user as well as address their problems. The following is the information about the graph: \n'),
+        Part.text('Title: $title\n'),
+        Part.text('Data points: ${data.join(", ")}\n'),
+        Part.text('Labels: ${labels.join(", ")}\n'),
+      ])) {
+        if (value != null && value.output != null) {
+          result += value.output!;
+        }
+      }
+    } catch (e) {
+      print('Error during interpretation: $e');
+      result = 'Failed to interpret the graph.';
+    }
+
+    List<String> paragraphs = splitIntoParagraphs(result);
+
+    return paragraphs;
+  }
 }
