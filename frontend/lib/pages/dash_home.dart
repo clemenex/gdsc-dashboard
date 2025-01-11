@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:lottie/lottie.dart';
+import 'package:flutter_gemini/flutter_gemini.dart';
 
 class DashHomePage extends StatelessWidget {
   const DashHomePage({super.key});
@@ -162,13 +163,21 @@ class DashHomePage extends StatelessWidget {
                             ),
                             Center(
                                 child: ElevatedButton(
-                                    onPressed: () => showModalBottomSheet(
+                                    onPressed: () async {
+                                      final interpretation = await interpretGraph(
+                                        '2024 National Budget of the Philippines',
+                                        [8, 6, 10, 4],
+                                        ['A', 'B', 'C', 'D'],
+                                      );
+
+                                      showModalBottomSheet(
                                         context: context,
-                                        builder: (context) => buildSheet()),
-                                    child: Text('Interpret')))
-                          ],
-                        )),
-                  );
+                                        builder: (context) => buildSheet(interpretation));
+                                    },
+                                    child: Text('interpret'),
+                          ),
+                        )]),
+                  ));
                 },
               ),
             ),
@@ -178,5 +187,55 @@ class DashHomePage extends StatelessWidget {
     );
   }
 
-  Widget buildSheet() => Container(child: Lottie.asset('assets/avatar1.json'));
+  Widget buildSheet(String interpretation) {
+  return Container(
+    padding: EdgeInsets.all(16.0),
+    child: Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Title for the interpretation
+        Text(
+          'Graph Interpretation',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        SizedBox(height: 8),
+
+        // Displaying the interpretation
+        Text(
+          interpretation,
+          style: TextStyle(
+            fontSize: 16,
+          ),
+        ),
+      ],
+    ),
+  );
 }
+}
+
+Future<String> interpretGraph(String title, List<double> data, List<String> labels) async {
+  String result = '';
+
+  try {
+    await for (var value in Gemini.instance.promptStream(parts: [
+      Part.text('Interpret the following data visualization:\n'),
+      Part.text('Title: $title\n'),
+      Part.text('Data points: ${data.join(", ")}\n'),
+      Part.text('Labels: ${labels.join(", ")}\n'),
+    ])) {
+      if (value != null && value.output != null) {
+        result += value.output!;
+      }
+    }
+  } catch (e) {
+    print('Error during interpretation: $e');
+    result = 'Failed to interpret the graph.';
+  }
+
+  return result;
+}
+

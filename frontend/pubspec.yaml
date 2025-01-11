@@ -65,12 +65,12 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   assets:
-  - lib/assets/iconGoogle.png
-  # - /lib/config/.env
+    - lib/assets/iconGoogle.png
+    - lib/config/.env
+    - assets/
 
   # To add assets to your application, add an assets section, like this:
-  assets:
-    - assets/
+
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
