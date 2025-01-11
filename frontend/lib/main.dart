@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/pages/dash_home.dart';
 import 'package:frontend/pages/login_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:frontend/pages/dash_home.dart';
@@ -11,7 +12,6 @@ void main() async {
   // await dotenv.load();
   runApp(MyApp());
 }
-
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
