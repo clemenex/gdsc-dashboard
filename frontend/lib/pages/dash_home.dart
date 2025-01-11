@@ -146,7 +146,10 @@ class DashHomePage extends StatelessWidget {
                       ),
                       Center(
                           child: ElevatedButton(
-                              onPressed: () {}, child: Text('Interpret')))
+                              onPressed: () => showModalBottomSheet(
+                                  context: context,
+                                  builder: (context) => buildSheet()),
+                              child: Text('Interpret')))
                     ],
                   )),
             );
@@ -155,4 +158,6 @@ class DashHomePage extends StatelessWidget {
       ),
     );
   }
+
+  Widget buildSheet() => Container();
 }
