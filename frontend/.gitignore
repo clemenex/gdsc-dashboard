@@ -45,4 +45,8 @@ app.*.map.json
 /android/app/release
 
 #environmental variable
+<<<<<<< HEAD
 /lib/config/.env
+=======
+lib/config/.env
+>>>>>>> 7bc9f341dbd2ea6657775d7938181b932dfc8d05
