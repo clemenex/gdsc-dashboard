@@ -8,6 +8,26 @@ class DashHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final List<double> yValues = [3, 5, 8, 6]; // Y-axis values
+    final List<String> xLabels = ['A', 'B', 'C', 'D']; // X-axis labels
+    String graphTitle = '2024 National Budget of the Philippines';
+
+    List<BarChartGroupData> _buildBarGroups() {
+      return List.generate(
+        yValues.length,
+        (index) => BarChartGroupData(
+          x: index, // X index
+          barRods: [
+            BarChartRodData(
+              toY: yValues[index], // Y value
+              color: Colors.blue, // Bar color
+              borderRadius: BorderRadius.circular(4), // Rounded edges
+            ),
+          ],
+        ),
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -60,7 +80,6 @@ class DashHomePage extends StatelessWidget {
                             children: [
                               SizedBox(
                                 height: 200,
-                                //child: Container(color: Colors.red),
                                 child: BarChart(
                                   BarChartData(
                                     borderData: FlBorderData(
@@ -83,77 +102,26 @@ class DashHomePage extends StatelessWidget {
                                                   false)), // Hide top axis labels Hide Y axis labels
                                       bottomTitles: AxisTitles(
                                         sideTitles: SideTitles(
-                                          showTitles:
-                                              true, // Show X axis labels
-                                          getTitlesWidget: (value, meta) {
-                                            // Customize X axis labels
-                                            if (value == 0) {
-                                              return Text('A');
-                                            } else if (value == 1) {
-                                              return Text('B');
-                                            } else if (value == 2) {
-                                              return Text('C');
-                                            } else if (value == 3) {
-                                              return Text('D');
+                                          showTitles: true,
+                                          getTitlesWidget:
+                                              (double value, TitleMeta meta) {
+                                            final int index = value.toInt();
+                                            if (index < xLabels.length) {
+                                              return Text(xLabels[index]);
                                             }
                                             return Text('');
                                           },
                                         ),
                                       ),
                                     ), // Show titles on axes
-                                    barGroups: [
-                                      BarChartGroupData(
-                                        x: 0,
-                                        barRods: [
-                                          BarChartRodData(
-                                            toY: 8, // Bar height
-                                            color: Colors.blue, // Bar color
-                                            width: 16, // Bar width
-                                            // borderRadius: BorderRadius.horizontal(
-                                            //   left: Radius.circular(0),
-                                            //   right: Radius.circular(0),
-                                            // ),
-                                          ),
-                                        ],
-                                      ),
-                                      BarChartGroupData(
-                                        x: 1,
-                                        barRods: [
-                                          BarChartRodData(
-                                            toY: 6,
-                                            color: Colors.blue,
-                                            width: 16,
-                                          ),
-                                        ],
-                                      ),
-                                      BarChartGroupData(
-                                        x: 2,
-                                        barRods: [
-                                          BarChartRodData(
-                                            toY: 10,
-                                            color: Colors.blue,
-                                            width: 16,
-                                          ),
-                                        ],
-                                      ),
-                                      BarChartGroupData(
-                                        x: 3,
-                                        barRods: [
-                                          BarChartRodData(
-                                            toY: 4,
-                                            color: Colors.blue,
-                                            width: 16,
-                                          ),
-                                        ],
-                                      ),
-                                    ],
+                                    barGroups: _buildBarGroups(),
                                   ),
                                 ),
                               ),
                               Padding(
                                 padding: EdgeInsets.all(8.0),
                                 child: Text(
-                                  '2024 National Budget of the Philippines',
+                                  graphTitle,
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
