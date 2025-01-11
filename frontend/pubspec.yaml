@@ -39,11 +39,8 @@ dependencies:
   firebase_auth: ^5.4.0
   http: ^1.2.2
   flutter_login: ^5.0.0
-<<<<<<< HEAD
   google_sign_in: ^6.2.2
-=======
   fl_chart: ^0.70.1
->>>>>>> c54c2465e1f04fdd8181200dc82a271792d463f7
 
 dev_dependencies:
   flutter_test:
