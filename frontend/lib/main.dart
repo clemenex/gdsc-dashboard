@@ -24,8 +24,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: DashHomePage(),
-    );
+        debugShowCheckedModeBanner: false,
+        home: DashHomePage(),
+        routes: {
+          '/login': (context) => LoginPage(),
+        });
   }
 }

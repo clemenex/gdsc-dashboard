@@ -16,6 +16,15 @@ class DashHomePage extends StatelessWidget {
                 color: Colors.white,
                 fontSize: 24,
                 fontWeight: FontWeight.bold)),
+        actions: [
+          Padding(
+              padding: EdgeInsets.all(4),
+              child: IconButton(
+                  onPressed: () {
+                    Navigator.pushReplacementNamed(context, '/login');
+                  },
+                  icon: Icon(Icons.logout, color: Colors.white)))
+        ],
       ),
       body: Container(
         color: Colors.white,
