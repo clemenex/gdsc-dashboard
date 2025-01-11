@@ -8,13 +8,19 @@
 
 #include <firebase_auth/firebase_auth_plugin_c_api.h>
 #include <firebase_core/firebase_core_plugin_c_api.h>
+<<<<<<< HEAD
+=======
 #include <url_launcher_windows/url_launcher_windows.h>
+>>>>>>> b44e6a01bdc76ecc8d40bab4ec57c5c297973c42
 
 void RegisterPlugins(flutter::PluginRegistry* registry) {
   FirebaseAuthPluginCApiRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("FirebaseAuthPluginCApi"));
   FirebaseCorePluginCApiRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("FirebaseCorePluginCApi"));
+<<<<<<< HEAD
+=======
   UrlLauncherWindowsRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("UrlLauncherWindows"));
+>>>>>>> b44e6a01bdc76ecc8d40bab4ec57c5c297973c42
 }
