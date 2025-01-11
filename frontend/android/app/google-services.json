@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "915666521999",
+    "project_id": "innolympics2025",
+    "storage_bucket": "innolympics2025.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:915666521999:android:5b0569d7a6ad94c8d405fa",
+        "android_client_info": {
+          "package_name": "com.example.frontend"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBMjejnT6z8sNX_75cED9Ixihd9hT6ldPI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
