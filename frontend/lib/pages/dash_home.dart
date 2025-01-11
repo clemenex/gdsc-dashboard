@@ -8,9 +8,14 @@ class DashHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        centerTitle: true,
+        toolbarHeight: 75,
+        backgroundColor: Colors.red.shade300,
         title: Text('DashGov',
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+            style: TextStyle(
+                color: Colors.white,
+                fontSize: 24,
+                fontWeight: FontWeight.bold)),
       ),
       body: Container(
         color: Colors.white,
@@ -18,11 +23,11 @@ class DashHomePage extends StatelessWidget {
           itemCount: 10,
           itemBuilder: (context, index) {
             return Padding(
-              padding: EdgeInsets.all(12.0),
+              padding: EdgeInsets.symmetric(vertical: 6, horizontal: 8),
               child: Container(
                   padding: EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: Colors.teal,
+                    color: Colors.red.shade200,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Column(
