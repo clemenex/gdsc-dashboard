@@ -46,4 +46,12 @@ void streamPromptResponse(String prompt) {
     print('streaming completed');
   });
 }
-
+      initialRoute: '/home', // Set the initial route to LoginPage
+      routes: {
+        '/login': (context) => LoginPage(), // Login page route
+        '/signup': (context) => SignUpPage(), // Sign-up page route
+        '/home': (context) => DashHomePage() // Homepage
+      },
+    );
+  }
+}
