@@ -8,6 +8,26 @@ class DashHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final List<double> yValues = [3, 5, 8, 6]; // Y-axis values
+    final List<String> xLabels = ['A', 'B', 'C', 'D']; // X-axis labels
+    String graphTitle = '2024 National Budget of the Philippines';
+
+    List<BarChartGroupData> _buildBarGroups() {
+      return List.generate(
+        yValues.length,
+        (index) => BarChartGroupData(
+          x: index, // X index
+          barRods: [
+            BarChartRodData(
+              toY: yValues[index], // Y value
+              color: Colors.blue, // Bar color
+              borderRadius: BorderRadius.circular(4), // Rounded edges
+            ),
+          ],
+        ),
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
