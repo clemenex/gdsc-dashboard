@@ -1,0 +1,31 @@
+{
+    "Category": "National Budget",
+    "Costs": "5,768,000,000,000",
+    "Children": [
+        {
+            "Category": "Social Services",
+            "Costs": "2,183,000,000,000",
+            "Percentage": 37.9
+        },
+        {
+            "Category": "Economic Services",
+            "Costs": "1,709,000,000,000",
+            "Percentage": 29.6
+        },
+        {
+            "Category": "General Public Services",
+            "Costs": "893,300,000,000",
+            "Percentage": 15.5
+        },
+        {
+            "Category": "Debt Burden (includes Net Lending)",
+            "Costs": "699,200,000,000",
+            "Percentage": 12.1
+        },
+        {
+            "Category": "Defense",
+            "Costs": "282,700,000,000",
+            "Percentage": 4.9
+        }
+    ]
+}
