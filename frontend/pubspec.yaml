@@ -43,6 +43,7 @@ dependencies:
   fl_chart: ^0.70.1
   flutter_gemini: ^3.0.0
   lottie: ^3.3.1
+  cloud_firestore: ^5.6.1
 
 dev_dependencies:
   flutter_test:

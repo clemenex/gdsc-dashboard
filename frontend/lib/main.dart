@@ -4,6 +4,8 @@ import 'package:frontend/pages/dash_home.dart';
 import 'package:frontend/pages/login_page.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_gemini/flutter_gemini.dart';
+import 'package:frontend/pages/sign_up_page.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 void streamPromptResponse(String prompt) {
   Gemini.instance.promptStream(parts: [
@@ -31,7 +33,7 @@ void main() async {
   } catch (e) {
     print('Error loading .env file: $e');
   }
-
+  await Firebase.initializeApp(); 
   runApp(MyApp());
 }
 
@@ -46,7 +48,8 @@ class MyApp extends StatelessWidget {
       initialRoute: '/home', // Set the initial route to LoginPage
       routes: {
         '/login': (context) => LoginPage(), // Login page route
-        '/home': (context) => DashHomePage() // Homepage
+        '/home': (context) => DashHomePage(), // Homepage
+        '/signup': (context) => SignUpPage()
       },
     );
   }

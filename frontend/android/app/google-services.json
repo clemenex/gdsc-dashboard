@@ -1,42 +1,33 @@
 {
   "project_info": {
-    "project_number": "915666521999",
-    "firebase_url": "https://innolympics2025-default-rtdb.asia-southeast1.firebasedatabase.app",
-    "project_id": "innolympics2025",
-    "storage_bucket": "innolympics2025.firebasestorage.app"
+    "project_number": "891706072787",
+    "project_id": "dashgov-a1955",
+    "storage_bucket": "dashgov-a1955.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:915666521999:android:5b0569d7a6ad94c8d405fa",
+        "mobilesdk_app_id": "1:891706072787:android:0e65ec4f833653da907e26",
         "android_client_info": {
           "package_name": "com.example.frontend"
         }
       },
       "oauth_client": [
         {
-          "client_id": "915666521999-km23sb1go747e0tbgk0icp9ackht1h6s.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.frontend",
-            "certificate_hash": "8ce02ffb004176fd38006e3c10361b72a38cdc5a"
-          }
-        },
-        {
-          "client_id": "915666521999-srtsrl2hc8334u09gvpo01hvqn3f8pkr.apps.googleusercontent.com",
+          "client_id": "891706072787-qs8vcj7g6475gng8qn9e8j1aiuvqk3d0.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBMjejnT6z8sNX_75cED9Ixihd9hT6ldPI"
+          "current_key": "AIzaSyCyox-5YPEqOls-FIj4N6RIej6Em9FrvGg"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "915666521999-srtsrl2hc8334u09gvpo01hvqn3f8pkr.apps.googleusercontent.com",
+              "client_id": "891706072787-qs8vcj7g6475gng8qn9e8j1aiuvqk3d0.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
