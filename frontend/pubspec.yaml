@@ -66,6 +66,7 @@ flutter:
   uses-material-design: true
   assets:
     - lib/assets/iconGoogle.png
+    - lib/config/.env
     - assets/
   # - /lib/config/.env
 
