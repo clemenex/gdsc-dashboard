@@ -21,14 +21,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'DashGov',
       debugShowCheckedModeBanner: false,
-      initialRoute: '/login', // Set the initial route to LoginPage
+      initialRoute: '/home', // Set the initial route to LoginPage
       routes: {
         '/login': (context) => LoginPage(), // Login page route
         '/signup': (context) => SignUpPage(), // Sign-up page route
         '/home': (context) => DashHomePage() // Homepage
-
       },
     );
   }
 }
-
