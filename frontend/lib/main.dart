@@ -8,7 +8,7 @@ void main() async {
   try {
     await dotenv.load();
     print('Environment variables loaded successfully');
-    print(dotenv.env['API_KEY']);
+    print(dotenv.env['GEMINI_API_KEY']);
   } catch (e) {
     print('Error loading .env file: $e');
   }
