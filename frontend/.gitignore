@@ -45,4 +45,4 @@ app.*.map.json
 /android/app/release
 
 #environmental variable
-.env
+lib/config/.env
