@@ -1,20 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:frontend/pages/dash_home.dart';
 import 'package:frontend/pages/login_page.dart';
-import 'package:http/http.dart' as http;
+import 'package:firebase_core/firebase_core.dart';
+import 'package:frontend/pages/dash_home.dart';
+import 'package:frontend/pages/sign_up_page.dart';
 
-void main() {
-  // WidgetsFlutterBinding.ensureInitialized();
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
 
-  // try {
-  //   await dotenv.load(fileName: "lib/config/.env");
-  //   print('Environment variables loaded successfully');
-  //   print(dotenv.env['GEMINI_API_KEY']);
-  // } catch (e) {
-  //   print('Error loading .env file: $e');
-  // }
-
+  await Firebase.initializeApp();
+  // await dotenv.load();
   runApp(MyApp());
 }
 
@@ -24,8 +19,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: 'DashGov',
       debugShowCheckedModeBanner: false,
-      home: DashHomePage(),
+      initialRoute: '/login', // Set the initial route to LoginPage
+      routes: {
+        '/login': (context) => LoginPage(), // Login page route
+        '/signup': (context) => SignUpPage(), // Sign-up page route
+        '/home': (context) => DashHomePage() // Homepage
+
+      },
     );
   }
 }
+
