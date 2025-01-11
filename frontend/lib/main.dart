@@ -5,34 +5,6 @@ import 'package:frontend/pages/login_page.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_gemini/flutter_gemini.dart';
 
-void main() async {
-   WidgetsFlutterBinding.ensureInitialized();
-
-   try {
-     await dotenv.load(fileName: "lib/config/.env");
-     final apiKey = dotenv.get('GEMINI_API_KEY');
-     Gemini.init(apiKey: apiKey);
-     print('Environment variables loaded successfully');
-     print(dotenv.env['GEMINI_API_KEY']);
-   } catch (e) {
-     print('Error loading .env file: $e');
-   }
-
-  runApp(MyApp());  
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: DashHomePage(),
-    );
-  }
-}
-
 void streamPromptResponse(String prompt) {
   Gemini.instance.promptStream(parts: [
     Part.text(prompt),
@@ -46,10 +18,34 @@ void streamPromptResponse(String prompt) {
     print('streaming completed');
   });
 }
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  try {
+    await dotenv.load(fileName: "lib/config/.env");
+    final apiKey = dotenv.get('GEMINI_API_KEY');
+    Gemini.init(apiKey: apiKey);
+    print('Environment variables loaded successfully');
+    print(dotenv.env['GEMINI_API_KEY']);
+  } catch (e) {
+    print('Error loading .env file: $e');
+  }
+
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: DashHomePage(),
       initialRoute: '/home', // Set the initial route to LoginPage
       routes: {
         '/login': (context) => LoginPage(), // Login page route
-        '/signup': (context) => SignUpPage(), // Sign-up page route
         '/home': (context) => DashHomePage() // Homepage
       },
     );
