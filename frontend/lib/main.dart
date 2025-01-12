@@ -33,7 +33,7 @@ void main() async {
   } catch (e) {
     print('Error loading .env file: $e');
   }
-  await Firebase.initializeApp(); 
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: DashHomePage(),
-      initialRoute: '/home', // Set the initial route to LoginPage
+      initialRoute: '/login', // Set the initial route to LoginPage
       routes: {
         '/login': (context) => LoginPage(), // Login page route
         '/home': (context) => DashHomePage(), // Homepage
