@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:frontend/util/dash_pie_chart.dart';
 import 'package:lottie/lottie.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
@@ -17,6 +18,148 @@ class _DashHomePageState extends State<DashHomePage> {
   Widget build(BuildContext context) {
     PageController _controller = PageController();
     String graphTitle = 'Yearly National Budget of the Philippines';
+
+    Future<void> interpretLineGraph() async {
+      final interpretation = await interpretGraph(
+        '2024 National Budget of the Philippines',
+        [8, 6, 10, 4],
+        ['A', 'B', 'C', 'D'],
+      );
+      showModalBottomSheet(
+          context: context,
+          builder: (context) => Container(
+                height: 900,
+                padding: EdgeInsets.all(16.0),
+                child: PageView.builder(
+                  controller: _controller,
+                  itemCount: 3,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Title for the interpretation
+                        Text(
+                          'Graph Interpretation',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 8),
+
+                        // Graphic
+                        Center(
+                          child: Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Lottie.asset(
+                                width: 150,
+                                height: 150,
+                                'assets/interpretation_gif.json'),
+                          ),
+                        ),
+
+                        // Displaying the interpretation
+                        Text(
+                          interpretation[index],
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
+                        ),
+
+                        SizedBox(height: 16),
+
+                        Container(
+                            alignment: Alignment(0, 0.75),
+                            child: SmoothPageIndicator(
+                              controller: _controller,
+                              count: 3,
+                              effect: WormEffect(
+                                dotWidth: 10,
+                                dotHeight: 10,
+                                spacing: 8,
+                                radius: 10,
+                                dotColor: Colors.grey,
+                                activeDotColor: Colors.blue,
+                              ),
+                            )),
+                      ],
+                    );
+                  },
+                ),
+              ));
+    }
+
+    Future<void> interpretPieGraph() async {
+      final interpretation = await interpretGraph(
+        '2024 Budget Breakdown of National Departments',
+        [8, 6, 10, 4],
+        ['A', 'B', 'C', 'D'],
+      );
+      showModalBottomSheet(
+          context: context,
+          builder: (context) => Container(
+                height: 900,
+                padding: EdgeInsets.all(16.0),
+                child: PageView.builder(
+                  controller: _controller,
+                  itemCount: 3,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Title for the interpretation
+                        Text(
+                          'Graph Interpretation',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 8),
+
+                        // Graphic
+                        Center(
+                          child: Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Lottie.asset(
+                                width: 150,
+                                height: 150,
+                                'assets/interpretation_gif.json'),
+                          ),
+                        ),
+
+                        // Displaying the interpretation
+                        Text(
+                          interpretation[index],
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
+                        ),
+
+                        SizedBox(height: 16),
+
+                        Container(
+                            alignment: Alignment(0, 0.75),
+                            child: SmoothPageIndicator(
+                              controller: _controller,
+                              count: 3,
+                              effect: WormEffect(
+                                dotWidth: 10,
+                                dotHeight: 10,
+                                spacing: 8,
+                                radius: 10,
+                                dotColor: Colors.grey,
+                                activeDotColor: Colors.blue,
+                              ),
+                            )),
+                      ],
+                    );
+                  },
+                ),
+              ));
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -91,19 +234,6 @@ class _DashHomePageState extends State<DashHomePage> {
                               gridData: FlGridData(show: false),
                               borderData: FlBorderData(show: false),
                               titlesData: FlTitlesData(
-                                // bottomTitles: AxisTitles(
-                                //   sideTitles: SideTitles(
-                                //     showTitles: true,
-                                //     getTitlesWidget: (value, meta) {
-                                //       final index = value.toInt();
-                                //       if (index >= 0 && index < labels.length) {
-                                //         return Text(
-                                //             labels[index]); // Display years
-                                //       }
-                                //       return Text('');
-                                //     },
-                                //   ),
-                                // ),
                                 leftTitles: AxisTitles(
                                   sideTitles: SideTitles(
                                       showTitles: false), // Y-axis titles
@@ -150,79 +280,7 @@ class _DashHomePageState extends State<DashHomePage> {
                                   color: Colors.white)),
                         ),
                         ElevatedButton(
-                          onPressed: () async {
-                            final interpretation = await interpretGraph(
-                              '2024 National Budget of the Philippines',
-                              [8, 6, 10, 4],
-                              ['A', 'B', 'C', 'D'],
-                            );
-                            showModalBottomSheet(
-                                context: context,
-                                builder: (context) => Container(
-                                      height: 900,
-                                      padding: EdgeInsets.all(16.0),
-                                      child: PageView.builder(
-                                        controller: _controller,
-                                        itemCount: 3,
-                                        itemBuilder:
-                                            (BuildContext context, int index) {
-                                          return Column(
-                                            mainAxisSize: MainAxisSize.min,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              // Title for the interpretation
-                                              Text(
-                                                'Graph Interpretation',
-                                                style: TextStyle(
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                              SizedBox(height: 8),
-
-                                              // Graphic
-                                              Center(
-                                                child: Padding(
-                                                  padding: EdgeInsets.all(8.0),
-                                                  child: Lottie.asset(
-                                                      width: 150,
-                                                      height: 150,
-                                                      'assets/interpretation_gif.json'),
-                                                ),
-                                              ),
-
-                                              // Displaying the interpretation
-                                              Text(
-                                                interpretation[index],
-                                                style: TextStyle(
-                                                  fontSize: 16,
-                                                ),
-                                              ),
-
-                                              SizedBox(height: 16),
-
-                                              Container(
-                                                  alignment: Alignment(0, 0.75),
-                                                  child: SmoothPageIndicator(
-                                                    controller: _controller,
-                                                    count: 3,
-                                                    effect: WormEffect(
-                                                      dotWidth: 10,
-                                                      dotHeight: 10,
-                                                      spacing: 8,
-                                                      radius: 10,
-                                                      dotColor: Colors.grey,
-                                                      activeDotColor:
-                                                          Colors.blue,
-                                                    ),
-                                                  )),
-                                            ],
-                                          );
-                                        },
-                                      ),
-                                    ));
-                          },
+                          onPressed: interpretLineGraph,
                           child: Text('Interpret'),
                         ),
                       ],
@@ -230,6 +288,33 @@ class _DashHomePageState extends State<DashHomePage> {
                   ),
                 );
               },
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 24, vertical: 24),
+                  decoration: BoxDecoration(
+                      color: Colors.red.shade300,
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Column(
+                    children: [
+                      DashPie(),
+                      Padding(
+                        padding: EdgeInsets.only(top: 24, bottom: 8),
+                        child: Text('2024 Budget Breakdown of Major PH Sectors',
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white)),
+                      ),
+                      ElevatedButton(
+                          onPressed: interpretPieGraph,
+                          child: Text('Interpret')),
+                    ],
+                  )),
             ),
           ],
         ),
@@ -239,31 +324,26 @@ class _DashHomePageState extends State<DashHomePage> {
 
   Future<Map<String, double>> fetchBudgetData() async {
     try {
-      // Fetch data from Firestore
       final snapshot =
           await FirebaseFirestore.instance.collection('budget').get();
 
-      // Initialize map for parsed data
       final data = <String, double>{};
 
       for (var doc in snapshot.docs) {
-        // Extract fields
-        final year = doc['YEAR'] as String?; // YEAR field
-        final amount = doc['TOTAL BUDGET'] as String?; // TOTAL BUDGET field
+        final year = doc['YEAR'] as String?;
+        final amount = doc['TOTAL BUDGET'] as String?;
 
-        // Ensure both fields are non-null
         if (year == null || amount == null) {
           print('Skipping document with missing fields: ${doc.data()}');
           continue;
         }
 
-        // Parse year and sanitize the amount
         final parsedYear = int.tryParse(year);
-        final sanitizedAmount = amount.replaceAll(',', ''); // Remove commas
+        final sanitizedAmount = amount.replaceAll(',', '');
         final parsedAmount = double.tryParse(sanitizedAmount);
 
         if (parsedYear != null && parsedAmount != null) {
-          data[year] = parsedAmount; // Add valid entries to the map
+          data[year] = parsedAmount;
         } else {
           print('Skipping invalid document: ${doc.data()}');
         }
@@ -277,7 +357,7 @@ class _DashHomePageState extends State<DashHomePage> {
 
       return data;
     } catch (e) {
-      print('Detailed error: $e'); // Log any error
+      print('Detailed error: $e');
       throw Exception('Failed to fetch budget data.');
     }
   }
@@ -295,7 +375,6 @@ class _DashHomePageState extends State<DashHomePage> {
         currentParagraph = "";
       }
     }
-    // Add the last paragraph if it exists
     if (currentParagraph.isNotEmpty) {
       paragraphs.add(currentParagraph.trim());
     }
