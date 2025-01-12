@@ -124,6 +124,7 @@ class _DashHomePageState extends State<DashHomePage> {
                               ),
                               lineBarsData: [
                                 LineChartBarData(
+                                  color: Colors.yellow.shade300,
                                   spots: List.generate(
                                     values.length,
                                     (index) =>
@@ -158,6 +159,7 @@ class _DashHomePageState extends State<DashHomePage> {
                             showModalBottomSheet(
                                 context: context,
                                 builder: (context) => Container(
+                                      height: 900,
                                       padding: EdgeInsets.all(16.0),
                                       child: PageView.builder(
                                         controller: _controller,
@@ -178,6 +180,17 @@ class _DashHomePageState extends State<DashHomePage> {
                                                 ),
                                               ),
                                               SizedBox(height: 8),
+
+                                              // Graphic
+                                              Center(
+                                                child: Padding(
+                                                  padding: EdgeInsets.all(8.0),
+                                                  child: Lottie.asset(
+                                                      width: 150,
+                                                      height: 150,
+                                                      'assets/interpretation_gif.json'),
+                                                ),
+                                              ),
 
                                               // Displaying the interpretation
                                               Text(
@@ -296,7 +309,7 @@ class _DashHomePageState extends State<DashHomePage> {
     try {
       await for (var value in Gemini.instance.promptStream(parts: [
         Part.text(
-            'Given the following context, can you create me a data storytelling like interpretation of our graphs? I want you to give me 3 paragraphs with 3 sentences each that captures the heart of the user as well as address their problems. The following is the information about the graph: \n'),
+            'Given the following context, can you create me a data storytelling like interpretation of our graphs? I want you to give me 3 paragraphs with 2 sentences each that captures the heart of the user as well as address their problems. The following is the information about the graph: \n'),
         Part.text('Title: $title\n'),
         Part.text('Data points: ${data.join(", ")}\n'),
         Part.text('Labels: ${labels.join(", ")}\n'),
